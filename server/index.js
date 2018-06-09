@@ -2,12 +2,17 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const sql = require("mssql");
+const nodeSQL = require("node-sql");
 const app = express();
 const constants = require("./constants");
 const queries = require("./queries");
+const Handlebars = require("handlebars");
 
 // Body Parser Middleware
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+    extended: true
+}));
 
 //CORS Middleware
 app.use(function (req, res, next) {
@@ -34,13 +39,13 @@ var executeQuery = function (res, query) {
             // create Request object
             var request = new sql.Request();
             // query to the database
-            request.query(query, function (err, res) {
+            request.query(query, function (err, result) {
                 if (err) {
                     console.log("Error while querying database :- " + err);
                     res.send(err);
                 }
                 else {
-                    res.send(res);
+                    res.send(result);
                 }
             });
         }
@@ -50,23 +55,27 @@ var executeQuery = function (res, query) {
 app.get("/", function (req, res) {
     res.status(200).send("Server running on port=" + server.address().port);
 })
-//GET API
-app.get("/api/user", function (req, res) {
-    var query = "select * from [user]";
+
+app.get("/api/participant/all", function (req, res) {
+    executeQuery(res, queries.getAllParticipants);
+});
+app.get("/api/participant/:id", function (req, res) {
+    const template = Handlebars.compile(queries.getParticipantDetails);
+    const query = template(req.params);
     executeQuery(res, query);
 });
-
-//POST API
-app.post("/api/user", function (req, res) {
-    executeQuery(res, queries.addUser.replace("---Name---", req.body.Name).replace("---Email---", req.body.Email).replace("---Password---", req.body.Password));
+app.post("/api/participant/add", function (req, res) {
+    const template = Handlebars.compile(queries.addParticipant);
+    const query = template(req.body);
+    executeQuery(res, query);
 });
-
-//PUT API
-app.put("/api/user/:id", function (req, res) {
-    executeQuery(res, queries.updateUser.replace("---Name---", req.body.Name).replace("---Email---", req.body.Email).replace("---id---", req.body.id));
+app.put("/api/participant/update/:id", function (req, res) {
+    const template = Handlebars.compile(queries.updateParticipant);
+    const query = template(req.body);
+    executeQuery(res, query);
 });
-
-// DELETE API
-app.delete("/api/user /:id", function (req, res) {
-    executeQuery(res, queries.deleteUser.replace("---id---", req.body.id));
+app.delete("/api/participant/delete/:id", function (req, res){
+    const template = Handlebars.compile(queries.deleteParticipant);
+    const query = template(req.body);
+    executeQuery(res, query);
 });

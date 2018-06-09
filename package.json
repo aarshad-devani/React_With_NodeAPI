@@ -6,7 +6,9 @@
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
+    "handlebars": "^4.0.11",
     "mssql": "^4.1.0",
+    "node-sql": "^1.1.5",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-materialize": "^2.2.1",
@@ -18,7 +20,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "start:server": "node ./server/index.js",
+    "start:server": "nodemon ./server/index.js",
     "start:client": "react-scripts start"
   },
   "devDependencies": {

@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Switch, Route, Link, Redirect } from "react-ro
 import Home from './pages/home';
 import AddUser from './pages/addUser';
 import Login from './pages/login';
+import ParticpantList from './pages/participantList';
 import AppLoader from './components/appLoader';
 
 function PrivateRoute({ component: Component, authed, location, ...rest }) {
@@ -61,6 +62,7 @@ class App extends Component {
           <Navbar brand='AKYSB' right style={{ backgroundColor: '#000000', color: '#FFFFFF' }}>
             <li><Link to="/" className="navbar-brand">Home</Link></li>
             <li><Link to="/login" className="navbar-brand">Login</Link></li>
+            <li><Link to="/all" className="navbar-brand">Participants</Link></li>
             <li><Link to="/add" className="navbar-brand">Add User</Link></li>
           </Navbar>
           <Switch>
@@ -70,6 +72,12 @@ class App extends Component {
               toggleAppLoader={this.toggleAppLoader}
               path="/add"
               component={AddUser}
+            />
+            <PrivateRoute
+              authed={authed}
+              toggleAppLoader={this.toggleAppLoader}
+              path="/all"
+              component={ParticpantList}
             />
             <PublicRoute
               authed={authed}
