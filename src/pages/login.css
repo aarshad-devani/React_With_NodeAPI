@@ -1,0 +1,13 @@
+.centeredDev {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.centerContainer {
+    display: flex;
+    justify-content: center;
+}
+.centerDIV {
+    width: 800px;
+}
