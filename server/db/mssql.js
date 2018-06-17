@@ -7,10 +7,11 @@ const knex = require('knex')({
         port: config.port,
         user : config.username,
         password : config.password,
-        database : config.database
+        database : config.database,
+        connectionTimeout: 60000,
+        options: config.options
     },
-
-    pool: { min: 0, max: 10 }
+    pool: { min: 5, max: 100 }
 });
 
 module.exports = knex;

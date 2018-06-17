@@ -3,9 +3,8 @@ module.exports = {
     password: "P@ssw0rd", //server password
     database: "akysb", // server default database name
     host: "aarshad-testdb.database.windows.net",
-    port: 1000,
+    port: 1433,
     connectionTimeout: 60000,
-    database: "akysb",
     options: {
         encrypt: true
     }
