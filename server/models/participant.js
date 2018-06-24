@@ -3,12 +3,12 @@ const mssql = require('../db/mssql')
 class Participant {
 
     static constructor() {
-        this.table = 'MParticipant'
+        this.table = 'MParticipant';
     }
 
 
     static async getAllParticipants() {
-        return await mssql.select().from(this.table)
+        return await mssql.select().from(this.table);
     }
 
     static async getParticipantDetails(ParticipantID) {
@@ -17,7 +17,7 @@ class Participant {
         .from(this.table)
         .where({
             ParticipantID: ParticipantID
-        })
+        });
     }
 
     static async addParticipant(data) {
@@ -39,7 +39,7 @@ class Participant {
             CreatedOn: data.CreatedOn,
             ModifiedOn: data.ModifiedOn,
             ITREBID: data.ITREBID
-        })
+        });
     }
 
     static async updateParticipant(ParticipantID, data) {
@@ -65,13 +65,13 @@ class Participant {
             CreatedOn: data.CreatedOn,
             ModifiedOn: data.ModifiedOn,
             ITREBID: data.ITREBID
-        })
+        });
     }
 
     static async deleteParticipant(ParticipantID) {
         return await mssql(this.table)
         .where('ParticipantID', ParticipantID)
-        .del()
+        .del();
     }
 
 }
